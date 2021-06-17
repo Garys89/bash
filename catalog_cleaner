@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# A script for cleaning the directory from files or directories other than ones with the format yyyy-mm-ddThh-mm-ss
+# Usage
+#	-s / --source - path the the catalog
+
+while getopts "s:" opt
+do
+	case $opt in
+		s) DIRPATH=$OPTARG ;;
+		:) echo Missing parameter
+			exit 1 ;;
+		?) echo Invalid option
+			exit 1;;
+	esac
+done
+
+if [ -z $DIRPATH ]
+then
+	DIRPATH=$PWD
+fi
+
+cd $DIRPATH
+echo $(ls)
+
+exit 0
