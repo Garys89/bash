@@ -4,12 +4,17 @@
 # Usage
 #	-s / --source - path the the catalog
 
-while getopts "s:" opt
+while getopts "s-:" opt
 do
 	case $opt in
 		s) DIRPATH=$OPTARG ;;
-		?) echo Invalid option
-			exit 1;;
+		?) if [[ $1 = "--source" ]]
+			then
+		        	DIRPATH=$2
+			else	
+				echo Invalid option
+				exit 1
+			fi;;
 	esac
 done
 
@@ -30,7 +35,7 @@ do
 		echo $i >> ../pozostawione
 	else
 		echo $i >> ../usuniete
-	        rm -r $i
+	        echo "rm -r $i"
 	fi
 done
 
