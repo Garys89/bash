@@ -4,18 +4,26 @@
 # Usage
 #	-s / --source - path the the catalog
 
-while getopts "s-:" opt
-do
-	case $opt in
-		s) DIRPATH=$OPTARG ;;
-		?) if [[ $1 = "--source" ]]
-			then
-		        	DIRPATH=$2
-			else	
-				echo Invalid option
-				exit 1
-			fi;;
+OPTIONS=$(getopt -o s: --long source: -- "$@")
+if [ $? != 0 ]
+then
+	echo "Invalid option"
+	exit 1
+fi
+
+eval set -- "$OPTIONS"
+while true; do
+	case "$1" in
+		-s | --source)
+			shift
+			DIRPATH=$1
+			;;
+		--)
+			shift
+			break
+			;;
 	esac
+	shift
 done
 
 if [ -z $DIRPATH ]
